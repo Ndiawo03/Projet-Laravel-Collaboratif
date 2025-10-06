@@ -9,7 +9,7 @@ Ce projet consiste à créer une API complète avec Laravel qui fournira les mê
 ## Équipe de développement
 
 - **Thiané** - Responsable du module Produits
-- **Ndiawo** - Responsable des modules Citations et Page d'accueil 
+- **Ndiawo** - Responsable du module Citations
 - **Alpha** - Responsable du module Articles
 
 ## Objectifs pédagogiques
@@ -28,7 +28,6 @@ Le projet utilise une approche de développement par branches où chaque module 
 
 - **main** - Configuration de base et documentation générale
 - **citations** - Module de gestion des citations (Ndiawo)
-- **accueil** - Module page d'accueil et dashboard (Ndiawo)  
 - **produits** - Module de gestion des produits (Thiané)
 - **articles** - Module de gestion des articles (Alpha)
 
@@ -50,14 +49,6 @@ Le projet utilise une approche de développement par branches où chaque module 
 - Fonctionnalité de citation aléatoire
 - Recherche et filtrage
 - 50 citations de test en français
-
-### Module Page d'accueil (Branche: accueil)  
-**Statut : Terminé**
-- Dashboard avec vue d'ensemble
-- Statistiques générales de l'API
-- Monitoring de l'état de santé du système
-- Informations détaillées sur l'API
-- Compatible avec tous les modules
 
 ### Module Produits (Branche: produits)
 **Statut : À développer par Thiané**
@@ -113,12 +104,6 @@ Pour tester le module Citations :
 ```bash
 git checkout citations
 php artisan migrate:fresh --seed
-php artisan serve
-```
-
-Pour tester le module Accueil :
-```bash
-git checkout accueil
 php artisan serve
 ```
 
@@ -201,7 +186,6 @@ Chaque module possède sa propre documentation détaillée accessible dans sa br
 
 ### Phase 1 - Développement des modules (En cours)
 - [x] Module Citations (Ndiawo)
-- [x] Module Page d'accueil (Ndiawo)  
 - [ ] Module Produits (Thiané)
 - [ ] Module Articles (Alpha)
 
