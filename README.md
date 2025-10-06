@@ -273,7 +273,6 @@ Variables d'environnement :
 ## Intégration
 
 Ce module est conçu pour s'intégrer facilement avec :
-- Module Page d'accueil (agrégation de données)
 - Module Articles (catégories communes)
 - Frontend React (remplacement de DummyJSON)
 
