@@ -1,0 +1,102 @@
+{
+	"info": {
+		"_postman_id": "blog-api-accueil",
+		"name": "Blog API - Module Accueil",
+		"description": "Collection pour tester le module Page d'accueil et dashboard du Blog API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Page d'accueil",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "Récupère l'aperçu général de l'API avec données récentes et statistiques"
+			}
+		},
+		{
+			"name": "Statistiques détaillées",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/stats",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"stats"
+					]
+				},
+				"description": "Récupère les statistiques détaillées de tous les modules"
+			}
+		},
+		{
+			"name": "État de santé",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/health",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"health"
+					]
+				},
+				"description": "Vérifie l'état de santé du système et des services"
+			}
+		},
+		{
+			"name": "Informations API",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/info",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"info"
+					]
+				},
+				"description": "Récupère les informations détaillées sur l'API et ses modules"
+			}
+		},
+		{
+			"name": "Test de ping",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/ping",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"ping"
+					]
+				},
+				"description": "Test simple pour vérifier que l'API répond correctement"
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000/api",
+			"type": "string"
+		}
+	]
+}
