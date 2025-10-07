@@ -26,3 +26,11 @@ Route::post('/quotes', [QuoteController::class, 'store']);
 Route::put('/quotes/{id}', [QuoteController::class, 'update']);
 Route::delete('/quotes/{id}', [QuoteController::class, 'destroy']);
 Route::get('/categories/quotes', [QuoteController::class, 'categories']);
+
+// Route de test simple
+Route::post('/test-quote', function(Request $request) {
+    return response()->json([
+        'message' => 'Test reçu',
+        'data' => $request->all()
+    ]);
+});
