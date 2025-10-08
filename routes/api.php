@@ -1,48 +1,36 @@
 <?php
 
-use App\Http\Controllers\PostController;
-use Illuminate\Support\Facades\Route;
-
-
-Route::get('posts/search', [PostController::class, 'search']);
-Route::get('posts/stats', [PostController::class, 'stats']);
-
-
-
-Route::get('posts', [PostController::class, 'index']);
-Route::get('posts/{post}', [PostController::class, 'show'])->whereNumber('post');
-Route::post('posts', [PostController::class, 'store']);
-Route::put('posts/{post}', [PostController::class, 'update'])->whereNumber('post');
-Route::delete('posts/{post}', [PostController::class, 'destroy'])->whereNumber('post');
-
-
-
-
-
-// routes/api.php les routes API pour les produits
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\QuoteController;
 use Illuminate\Http\Request;
-use App\Models\Product;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\ProductController;
+/*
+|--------------------------------------------------------------------------
+| API Routes - Module Citations
+|--------------------------------------------------------------------------
+|
+| Routes pour le module de gestion des citations
+|
+*/
 
-Route::get('/products', [ProductController::class, 'index']);
-Route::get('/products/{id}', [ProductController::class, 'show']);
-Route::post('/products', [ProductController::class, 'store']);
-Route::put('/products/{id}', [ProductController::class, 'update']);
-Route::delete('/products/{id}', [ProductController::class, 'destroy']);
-Route::get('/products/search/{keyword}', [ProductController::class, 'search']);
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
+// Quote routes
+Route::get('/quotes', [QuoteController::class, 'index']);
+Route::get('/quotes/search', [QuoteController::class, 'search']);
+Route::get('/quotes/random', [QuoteController::class, 'random']);
+Route::get('/quotes/{id}', [QuoteController::class, 'show']);
+Route::post('/quotes', [QuoteController::class, 'store']);
+Route::put('/quotes/{id}', [QuoteController::class, 'update']);
+Route::delete('/quotes/{id}', [QuoteController::class, 'destroy']);
+Route::get('/categories/quotes', [QuoteController::class, 'categories']);
+
+// Route de test simple
+Route::post('/test-quote', function(Request $request) {
+    return response()->json([
+        'message' => 'Test reçu',
+        'data' => $request->all()
+    ]);
+});

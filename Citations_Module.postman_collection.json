@@ -1,0 +1,248 @@
+{
+	"info": {
+		"_postman_id": "citations-module-collection",
+		"name": "Module Citations - API Tests",
+		"description": "Collection pour tester uniquement le module Citations (Branche: citations)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "📚 CRUD Citations",
+			"item": [
+				{
+					"name": "Lister toutes les citations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/quotes",
+							"host": ["{{base_url}}"],
+							"path": ["quotes"]
+						}
+					}
+				},
+				{
+					"name": "Créer une nouvelle citation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quote\": \"Le succès n'est pas final, l'échec n'est pas fatal : c'est le courage de continuer qui compte.\",\n    \"author\": \"Winston Churchill\",\n    \"category\": \"motivation\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/quotes",
+							"host": ["{{base_url}}"],
+							"path": ["quotes"]
+						}
+					}
+				},
+				{
+					"name": "Récupérer citation par ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/quotes/1",
+							"host": ["{{base_url}}"],
+							"path": ["quotes", "1"]
+						}
+					}
+				},
+				{
+					"name": "Mettre à jour une citation",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quote\": \"Citation mise à jour par Postman\",\n    \"author\": \"Auteur mis à jour\",\n    \"category\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/quotes/1",
+							"host": ["{{base_url}}"],
+							"path": ["quotes", "1"]
+						}
+					}
+				},
+				{
+					"name": "Supprimer une citation",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/quotes/1",
+							"host": ["{{base_url}}"],
+							"path": ["quotes", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "🔍 Recherche et Filtres",
+			"item": [
+				{
+					"name": "Citation aléatoire",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/quotes/random",
+							"host": ["{{base_url}}"],
+							"path": ["quotes", "random"]
+						}
+					}
+				},
+				{
+					"name": "Rechercher citations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/quotes/search?q=succès",
+							"host": ["{{base_url}}"],
+							"path": ["quotes", "search"],
+							"query": [
+								{
+									"key": "q",
+									"value": "succès"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Filtrer par catégorie",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/quotes?category=inspiration",
+							"host": ["{{base_url}}"],
+							"path": ["quotes"],
+							"query": [
+								{
+									"key": "category",
+									"value": "inspiration"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Pagination personnalisée",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/quotes?per_page=5&page=2",
+							"host": ["{{base_url}}"],
+							"path": ["quotes"],
+							"query": [
+								{
+									"key": "per_page",
+									"value": "5"
+								},
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "📂 Catégories",
+			"item": [
+				{
+					"name": "Lister catégories de citations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/categories/quotes",
+							"host": ["{{base_url}}"],
+							"path": ["categories", "quotes"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "⚠️ Tests d'erreurs",
+			"item": [
+				{
+					"name": "Citation inexistante",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/quotes/999999",
+							"host": ["{{base_url}}"],
+							"path": ["quotes", "999999"]
+						}
+					}
+				},
+				{
+					"name": "Création avec données invalides",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quote\": \"Trop courte\",\n    \"author\": \"\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/quotes",
+							"host": ["{{base_url}}"],
+							"path": ["quotes"]
+						}
+					}
+				},
+				{
+					"name": "Recherche avec terme trop court",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/quotes/search?q=a",
+							"host": ["{{base_url}}"],
+							"path": ["quotes", "search"],
+							"query": [
+								{
+									"key": "q",
+									"value": "a"
+								}
+							]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000/api",
+			"type": "string"
+		}
+	]
+}
