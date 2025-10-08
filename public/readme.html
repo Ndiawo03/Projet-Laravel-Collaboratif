@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog API - Documentation du Projet</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #7f8c8d;
+        }
+        .status-complete {
+            background: #27ae60;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .status-pending {
+            background: #f39c12;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            background: #ecf0f1;
+            padding: 2px 4px;
+            border-radius: 3px;
+            color: #2c3e50;
+        }
+        .branch-info {
+            background: #ecf0f1;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 10px 0;
+        }
+        .endpoints {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        ul li {
+            margin: 5px 0;
+        }
+        .team-member {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            display: inline-block;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Projet Laravel API - Blog API</h1>
+        <p><strong>Projet collaboratif de création d'une API REST avec Laravel pour remplacer l'API DummyJSON.</strong></p>
+        
+        <h2>👥 Équipe de développement</h2>
+        <div class="team-member">Thiané - Module Produits</div>
+        <div class="team-member">Ndiawo - Module Citations <span class="status-complete">✅ TERMINÉ</span></div>
+        <div class="team-member">Alpha - Module Articles</div>
+
+        <h2>🎯 Objectifs</h2>
+        <ul>
+            <li>Maîtriser les concepts de base de Laravel</li>
+            <li>Créer une API RESTful complète</li>
+            <li>Gérer une base de données avec Eloquent</li>
+            <li>Comprendre les concepts full-stack</li>
+        </ul>
+
+        <h2>🌿 Structure des branches</h2>
+        
+        <div class="branch-info">
+            <h3>Branche <code>main</code></h3>
+            <ul>
+                <li>Configuration de base Laravel</li>
+                <li>Structure commune du projet</li>
+                <li>Documentation générale</li>
+            </ul>
+        </div>
+
+        <div class="branch-info">
+            <h3>Branche <code>citations</code> <span class="status-complete">✅ TERMINÉ</span></h3>
+            <p><strong>Développé par Ndiawo</strong></p>
+            <ul>
+                <li>Module complet de gestion des citations</li>
+                <li>Endpoints CRUD pour les citations</li>
+                <li>Système de catégories de citations</li>
+                <li>Citation aléatoire optimisée</li>
+                <li>Fonctionnalités de recherche</li>
+            </ul>
+        </div>
+
+        <div class="branch-info">
+            <h3>Branche <code>accueil</code> <span class="status-complete">✅ TERMINÉ</span></h3>
+            <p><strong>Développé par Ndiawo</strong></p>
+            <ul>
+                <li>Module page d'accueil et dashboard</li>
+                <li>Statistiques générales de l'API</li>
+                <li>État de santé du système</li>
+                <li>Informations sur l'API</li>
+            </ul>
+        </div>
+
+        <div class="branch-info">
+            <h3>Branche <code>produits</code> <span class="status-pending">À DÉVELOPPER</span></h3>
+            <p><strong>À développer par Thiané</strong></p>
+            <ul>
+                <li>Module de gestion des produits</li>
+                <li>Système de filtrage et recherche</li>
+                <li>Upload d'images produits</li>
+                <li>Gestion des catégories produits</li>
+            </ul>
+        </div>
+
+        <div class="branch-info">
+            <h3>Branche <code>articles</code> <span class="status-pending">À DÉVELOPPER</span></h3>
+            <p><strong>À développer par Alpha</strong></p>
+            <ul>
+                <li>Module de gestion des articles</li>
+                <li>Gestion des auteurs</li>
+                <li>Système de tags</li>
+                <li>Statistiques des articles</li>
+            </ul>
+        </div>
+
+        <h2>📚 Modules terminés</h2>
+        
+        <div class="endpoints">
+            <h3>Module Citations (Branche <code>citations</code>)</h3>
+            <ul>
+                <li><code>GET /api/quotes</code> - Liste des citations</li>
+                <li><code>GET /api/quotes/random</code> - Citation aléatoire</li>
+                <li><code>GET /api/quotes/{id}</code> - Citation par ID</li>
+                <li><code>POST /api/quotes</code> - Créer une citation</li>
+                <li><code>PUT /api/quotes/{id}</code> - Modifier une citation</li>
+                <li><code>DELETE /api/quotes/{id}</code> - Supprimer une citation</li>
+                <li><code>GET /api/quotes/search</code> - Rechercher des citations</li>
+                <li><code>GET /api/categories/quotes</code> - Catégories de citations</li>
+            </ul>
+        </div>
+
+        <div class="endpoints">
+            <h3>Module Accueil (Branche <code>accueil</code>)</h3>
+            <ul>
+                <li><code>GET /api/</code> - Page d'accueil avec aperçu</li>
+                <li><code>GET /api/stats</code> - Statistiques détaillées</li>
+                <li><code>GET /api/health</code> - État de santé du système</li>
+                <li><code>GET /api/info</code> - Informations sur l'API</li>
+                <li><code>GET /api/ping</code> - Test de connectivité</li>
+            </ul>
+        </div>
+
+        <h2>🚀 Instructions d'utilisation</h2>
+        
+        <h3>Pour tester le module Citations :</h3>
+        <pre><code>git checkout citations
+php artisan migrate:fresh --seed
+php artisan serve
+# Tester avec: php test_citations.php</code></pre>
+
+        <h3>Pour tester le module Accueil :</h3>
+        <pre><code>git checkout accueil  
+php artisan serve
+# Tester avec: php test_accueil.php</code></pre>
+
+        <h2>📊 État actuel du projet</h2>
+        <ul>
+            <li><span class="status-complete">✅ Citations</span> (Ndiawo) - 100% complet</li>
+            <li><span class="status-complete">✅ Accueil</span> (Ndiawo) - 100% complet</li>
+            <li><span class="status-pending">🔄 Produits</span> (Thiané) - À développer</li>
+            <li><span class="status-pending">🔄 Articles</span> (Alpha) - À développer</li>
+        </ul>
+
+        <h2>🔗 Liens utiles</h2>
+        <ul>
+            <li><strong>API en local :</strong> <a href="http://127.0.0.1:8000/api/" target="_blank">http://127.0.0.1:8000/api/</a></li>
+            <li><strong>Repository GitHub :</strong> <a href="https://github.com/Ndiawo03/Projet-Laravel-Collaboratif" target="_blank">Projet Laravel Collaboratif</a></li>
+        </ul>
+
+        <footer style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #ecf0f1; text-align: center; color: #7f8c8d;">
+            <p><strong>Note :</strong> Ce projet suit une approche de développement par branches pour permettre un travail collaboratif efficace.</p>
+        </footer>
+    </div>
+</body>
+</html>
