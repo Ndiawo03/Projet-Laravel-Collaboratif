@@ -12,6 +12,7 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        //remplir la table products avec des données factices
+        \App\Models\Product::factory()->count(50)->create();
     }
 }
