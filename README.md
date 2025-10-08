@@ -6,60 +6,94 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-=======
 # Projet-Laravel-Collaboratif
->>>>>>> bbd3be680728a158ded0f4a79fe9fb096700ca70
+
+API REST Laravel pour un blog collaboratif — module Articles (Alpha)
+
+Ce dépôt contient l'API Laravel qui sert les données pour le module "Articles" (posts). Elle est pensée pour remplacer une API distante (DummyJSON) et être consommée ensuite par un frontend React. Pour l'instant on teste avec Postman.
+
+Contenu principal
+- routes/api.php : endpoints API (posts, etc.)
+- app/Models/Post.php : modèle Post
+- app/Http/Controllers/PostController.php : contrôleur RESTful pour posts
+- database/migrations : migrations (table posts incluse)
+- database/factories, database/seeders : factories & seeders
+- postman/ : collection et environnement pour tests Postman
+
+Prérequis
+- PHP 8.x (ou version compatible avec la version Laravel du projet)
+- Composer
+- Une base de données (MySQL, SQLite, etc.) configurée dans `.env`
+
+Installation rapide
+1. Installer les dépendances PHP :
+
+```powershell
+cd 'C:\Users\HP\Desktop\blog\Projet-Laravel-Collaboratif'
+composer install
+```
+
+2. Copier le fichier d'environnement et configurer la BD :
+
+```powershell
+copy .env.example .env
+# Édite .env : DB_CONNECTION, DB_DATABASE, DB_USERNAME, DB_PASSWORD
+```
+
+3. Générer la clé d'application et exécuter les migrations :
+
+```powershell
+php artisan key:generate
+php artisan migrate
+```
+
+4. (Optionnel) Seed d'exemples :
+
+```powershell
+php artisan db:seed --class=PostSeeder
+```
+
+Lancer le serveur de développement
+
+```powershell
+php artisan serve --port=8000
+```
+
+API - Endpoints (module Articles)
+Les routes sont définies dans `routes/api.php`. Préfixe appliqué : `/api`.
+
+- GET /api/posts — liste paginée des articles (supporte q, tag, author, per_page)
+- GET /api/posts/{id} — récupérer un article
+- POST /api/posts — créer un article
+- PUT /api/posts/{id} — mettre à jour un article
+- DELETE /api/posts/{id} — supprimer un article
+- GET /api/posts/search?q=... — recherche textuelle
+- GET /api/posts/stats — statistiques (total, vues, top posts)
+
+Tests Postman (fourni)
+- Le dossier `postman/` contient :
+	- `Blog-Articles-API.postman_collection.json` (collection)
+	- `Blog-Local.postman_environment.json` (baseUrl = http://127.0.0.1:8000)
+
+Importer les deux fichiers dans Postman, sélectionner l'environnement "Blog Local" puis exécuter la collection (Runner). La collection : crée un post, le récupère, le met à jour, recherche, récupère les stats, puis le supprime.
+
+Dépannage rapide
+- Si 404 sur `/api/...` :
+	- Assure-toi qu'un seul serveur PHP est en écoute sur le port (pas de conflit avec d'autres projets).
+	- Exécute : `php artisan route:clear && php artisan route:list --path=api` pour vérifier que les routes sont enregistrées.
+- Si erreurs lors du seeding : vérifie `storage/logs/laravel.log` — un cas fréquent est l'absence du trait `HasFactory` sur `App\Models\Post` si on appelle `Post::factory()`.
+
+Bonnes pratiques & suite possible
+- Ajouter l'authentification (Sanctum) pour protéger les endpoints de création/modification.
+- Ajouter des tests Feature PHPUnit pour couvrir les endpoints (index, store, show, update, delete).
+- Intégrer l'upload d'images pour les articles si nécessaire.
+
+Contributeurs
+- Thiané (Produits)
+- Ndiawo (Citations)
+- Alpha (Articles)
+
+Besoin d'aide ? Dis-moi si tu veux que je :
+- génère les Request classes (StorePostRequest / UpdatePostRequest) si manquantes,
+- ajoute les tests PHPUnit pour le module articles,
+- supprime la route de debug `api/ping` que j'avais temporairement ajoutée.
