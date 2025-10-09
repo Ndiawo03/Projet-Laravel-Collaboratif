@@ -1,186 +1,145 @@
-# Projet Laravel API - Blog API
+# Module Citations - API Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-# Projet-Laravel-Collaboratif
+API de gestion des citations développée avec Laravel 11. Ce module fait partie du projet Blog API collaboratif.
 
-API REST Laravel pour un blog collaboratif — module Articles (Alpha)
+## Description
 
-Ce dépôt contient l'API Laravel qui sert les données pour le module "Articles" (posts). Elle est pensée pour remplacer une API distante (DummyJSON) et être consommée ensuite par un frontend React. Pour l'instant on teste avec Postman.
+Module complet de gestion des citations permettant de créer, lire, mettre à jour et supprimer des citations ainsi que de gérer leurs catégories. Développé par Ndiawo dans le cadre du projet collaboratif Laravel.
 
-Contenu principal
-- routes/api.php : endpoints API (posts, etc.)
-- app/Models/Post.php : modèle Post
-- app/Http/Controllers/PostController.php : contrôleur RESTful pour posts
-- database/migrations : migrations (table posts incluse)
-- database/factories, database/seeders : factories & seeders
-- postman/ : collection et environnement pour tests Postman
+## Fonctionnalités
 
-Prérequis
-- PHP 8.x (ou version compatible avec la version Laravel du projet)
-- Composer
-- Une base de données (MySQL, SQLite, etc.) configurée dans `.env`
+### Gestion des citations
+- Création de nouvelles citations
+- Consultation de toutes les citations avec pagination
+- Récupération d'une citation spécifique
+- Mise à jour des citations existantes
+- Suppression de citations
+- Citation aléatoire optimisée
 
-Installation rapide
-1. Installer les dépendances PHP :
+### Système de catégories
+- 10 catégories pré-configurées
+- Filtrage par catégorie
+- Gestion des relations entre citations et catégories
 
-```powershell
-cd 'C:\Users\HP\Desktop\blog\Projet-Laravel-Collaboratif'
-composer install
+### Recherche et filtrage
+- Recherche textuelle dans les citations
+- Filtrage par catégorie
+- Pagination configurable
+
+## Endpoints API
+
+### URL de base
+```
+http://127.0.0.1:8000/api
 ```
 
-2. Copier le fichier d'environnement et configurer la BD :
+### Citations
 
-```powershell
-copy .env.example .env
-# Édite .env : DB_CONNECTION, DB_DATABASE, DB_USERNAME, DB_PASSWORD
+#### Lister toutes les citations
+```http
+GET /quotes
+```
+**Paramètres optionnels :**
+- `category` : Filtrer par catégorie
+- `per_page` : Nombre d'éléments par page (défaut: 10)
+- `page` : Numéro de page
+
+**Exemples :**
+```http
+GET /quotes
+GET /quotes?category=inspiration
+GET /quotes?per_page=20&page=2
 ```
 
-3. Générer la clé d'application et exécuter les migrations :
-
-```powershell
-php artisan key:generate
-php artisan migrate
+#### Citation aléatoire
+```http
+GET /quotes/random
 ```
 
-4. (Optionnel) Seed d'exemples :
-
-```powershell
-php artisan db:seed --class=PostSeeder
+#### Rechercher des citations
+```http
+GET /quotes/search?q=terme
 ```
 
-Lancer le serveur de développement
-
-```powershell
-php artisan serve --port=8000
+#### Citation spécifique
+```http
+GET /quotes/{id}
 ```
 
-API - Endpoints (module Articles)
-Les routes sont définies dans `routes/api.php`. Préfixe appliqué : `/api`.
+#### Créer une citation
+```http
+POST /quotes
+Content-Type: application/json
 
-- GET /api/posts — liste paginée des articles (supporte q, tag, author, per_page)
-- GET /api/posts/{id} — récupérer un article
-- POST /api/posts — créer un article
-- PUT /api/posts/{id} — mettre à jour un article
-- DELETE /api/posts/{id} — supprimer un article
-- GET /api/posts/search?q=... — recherche textuelle
-- GET /api/posts/stats — statistiques (total, vues, top posts)
+{
+    "quote": "Votre citation ici",
+    "author": "Nom de l'auteur", 
+    "category": "inspiration"
+}
+```
 
-Tests Postman (fourni)
-- Le dossier `postman/` contient :
-	- `Blog-Articles-API.postman_collection.json` (collection)
-	- `Blog-Local.postman_environment.json` (baseUrl = http://127.0.0.1:8000)
+#### Modifier une citation
+```http
+PUT /quotes/{id}
+Content-Type: application/json
 
-Importer les deux fichiers dans Postman, sélectionner l'environnement "Blog Local" puis exécuter la collection (Runner). La collection : crée un post, le récupère, le met à jour, recherche, récupère les stats, puis le supprime.
+{
+    "quote": "Citation modifiée",
+    "author": "Auteur modifié",
+    "category": "nouvelle-categorie"
+}
+```
 
-Dépannage rapide
-- Si 404 sur `/api/...` :
-	- Assure-toi qu'un seul serveur PHP est en écoute sur le port (pas de conflit avec d'autres projets).
-	- Exécute : `php artisan route:clear && php artisan route:list --path=api` pour vérifier que les routes sont enregistrées.
-- Si erreurs lors du seeding : vérifie `storage/logs/laravel.log` — un cas fréquent est l'absence du trait `HasFactory` sur `App\Models\Post` si on appelle `Post::factory()`.
+#### Supprimer une citation
+```http
+DELETE /quotes/{id}
+```
 
-Bonnes pratiques & suite possible
-- Ajouter l'authentification (Sanctum) pour protéger les endpoints de création/modification.
-- Ajouter des tests Feature PHPUnit pour couvrir les endpoints (index, store, show, update, delete).
-- Intégrer l'upload d'images pour les articles si nécessaire.
+### Catégories
 
-Contributeurs
-- Thiané (Produits)
-- Ndiawo (Citations)
-- Alpha (Articles)
+#### Lister les catégories de citations
+```http
+GET /categories/quotes
+```
 
-Besoin d'aide ? Dis-moi si tu veux que je :
-- génère les Request classes (StorePostRequest / UpdatePostRequest) si manquantes,
-- ajoute les tests PHPUnit pour le module articles,
-- supprime la route de debug `api/ping` que j'avais temporairement ajoutée.
-API REST collaborative développée avec Laravel 11 pour remplacer l'API DummyJSON dans un projet React existant.
+## Validation des données
 
-## Vue d'ensemble du projet
+### Création/Modification de citations
+- **quote** : Obligatoire, 10-1000 caractères
+- **author** : Obligatoire, maximum 255 caractères  
+- **category** : Optionnel, maximum 100 caractères
 
-Ce projet consiste à créer une API complète avec Laravel qui fournira les mêmes types de données que DummyJSON, permettant ainsi de connecter un frontend React existant à une API personnalisée.
+## Catégories disponibles
 
-## Équipe de développement
+1. **inspiration** - Citations inspirantes
+2. **motivation** - Citations motivantes  
+3. **amour** - Citations sur l'amour
+4. **succès** - Citations sur le succès
+5. **bonheur** - Citations sur le bonheur
+6. **sagesse** - Citations de sagesse
+7. **philosophie** - Citations philosophiques
+8. **vie** - Citations sur la vie
+9. **amitié** - Citations sur l'amitié
+10. **espoir** - Citations d'espoir
 
-- **Thiané** - Responsable du module Produits
-- **Ndiawo** - Responsable du module Citations
-- **Alpha** - Responsable du module Articles
-
-## Objectifs pédagogiques
-
-- Maîtriser les concepts fondamentaux de Laravel
-- Développer une API RESTful complète et professionnelle
-- Apprendre la gestion de base de données avec Eloquent ORM
-- Comprendre l'architecture full-stack moderne
-- Pratiquer le développement collaboratif avec Git
-
-## Architecture du projet
-
-### Approche modulaire par branches
-
-Le projet utilise une approche de développement par branches où chaque module est développé indépendamment :
-
-- **main** - Configuration de base et documentation générale
-- **citations** - Module de gestion des citations (Ndiawo)
-- **produits** - Module de gestion des produits (Thiané)
-- **articles** - Module de gestion des articles (Alpha)
-
-### Technologies utilisées
-
-- **Backend** : Laravel 11
-- **Base de données** : SQLite (développement) / MySQL (production)
-- **ORM** : Eloquent
-- **Validation** : Form Requests Laravel
-- **Tests** : Scripts PHP personnalisés + Postman
-- **Documentation** : Markdown + Collections Postman
-
-## Modules développés
-
-### Module Citations (Branche: citations)
-**Statut : Terminé**
-- Gestion complète des citations (CRUD)
-- Système de catégories
-- Fonctionnalité de citation aléatoire
-- Recherche et filtrage
-- 50 citations de test en français
-
-### Module Produits (Branche: produits)
-**Statut : À développer par Thiané**
-- Gestion des produits avec pricing
-- Système de catégories produits
-- Upload et gestion d'images
-- Filtrage et recherche avancée
-- Gestion des stocks et promotions
-
-### Module Articles (Branche: articles)
-**Statut : À développer par Alpha**
-- Gestion des articles de blog
-- Système d'auteurs
-- Tags et catégories d'articles
-- Statistiques de lecture
-- Gestion des brouillons et publications
-
-## Installation et configuration
+## Installation et démarrage
 
 ### Prérequis
-- PHP 8.2 ou supérieur
+- PHP 8.2+
 - Composer
-- Node.js et npm
 - Git
 
 ### Installation
 ```bash
-# Cloner le repository
+# Cloner et se placer sur la bonne branche
 git clone https://github.com/Ndiawo03/Projet-Laravel-Collaboratif.git
 cd BlogAPI
+git checkout citations
 
 # Installer les dépendances
 composer install
-npm install
 
-# Configuration de l'environnement
+# Configuration
 cp .env.example .env
 php artisan key:generate
 
@@ -192,125 +151,154 @@ php artisan db:seed
 php artisan serve
 ```
 
-## Utilisation des branches
-
-### Tester un module spécifique
-
-Pour tester le module Citations :
+### Tester l'API
 ```bash
-git checkout citations
-php artisan migrate:fresh --seed
-php artisan serve
+# Script de test automatisé
+php test_citations.php
+
+# Ou utiliser la collection Postman
+# Importer : Citations_Module.postman_collection.json
 ```
 
-### Développer un nouveau module
+## Structure technique
 
-1. Créer une nouvelle branche depuis main
-2. Développer le module avec ses migrations, modèles, contrôleurs
-3. Créer les tests et la documentation
-4. Merger vers main une fois terminé
+### Modèles
+- **Quote** : Modèle principal des citations avec factory
+- **Category** : Modèle des catégories avec relations
 
-## Structure de la base de données
+### Contrôleurs
+- **QuoteController** : Gestion complète des citations (API Resource Controller)
 
-### Tables communes à tous les modules
+### Validation
+- **StoreQuoteRequest** : Validation création de citations
+- **UpdateQuoteRequest** : Validation modification de citations
 
+### Migrations
+- **create_categories_table** : Table des catégories universelles
+- **create_quotes_table** : Table des citations
+
+### Seeders
+- **CategorySeeder** : Création des 10 catégories de citations
+- **QuoteSeeder** : Création de 50 citations de test en français
+
+## Base de données
+
+### Table quotes
 ```sql
--- Catégories universelles
-CREATE TABLE categories (
-    id BIGINT PRIMARY KEY,
-    name VARCHAR(255),
-    slug VARCHAR(255) UNIQUE,
-    type ENUM('products', 'quotes', 'posts'),
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
-);
-
--- Utilisateurs (gestion future)
-CREATE TABLE users (
-    id BIGINT PRIMARY KEY,
-    name VARCHAR(255),
-    email VARCHAR(255) UNIQUE,
-    email_verified_at TIMESTAMP NULL,
-    password VARCHAR(255),
+CREATE TABLE quotes (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    quote TEXT NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    category VARCHAR(100) NULL,
     created_at TIMESTAMP,
     updated_at TIMESTAMP
 );
 ```
 
-## Configuration CORS
+### Table categories  
+```sql
+CREATE TABLE categories (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    slug VARCHAR(255) UNIQUE NOT NULL,
+    type ENUM('products', 'quotes', 'posts') NOT NULL,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);
+```
 
-L'API est configurée pour accepter les requêtes cross-origin depuis :
-- `http://localhost:3000` (React development)
-- `http://127.0.0.1:3000`
-- Configurable via variables d'environnement
+## Tests
 
-## Tests et qualité
+### Test automatisé
+Le script `test_citations.php` teste automatiquement tous les endpoints :
+```bash
+php test_citations.php
+```
 
-### Tests automatisés
-Chaque module inclut des scripts de test automatisés :
-- Tests d'endpoints
-- Validation des données
-- Vérification des réponses JSON
+### Collection Postman
+Collection complète disponible : `Citations_Module.postman_collection.json`
 
-### Collections Postman
-Collections complètes pour chaque module permettant de tester tous les endpoints rapidement.
+Variables d'environnement :
+- `base_url` : `http://127.0.0.1:8000/api`
 
-### Standards de code
-- Respect des conventions Laravel
-- Documentation des méthodes
-- Validation stricte des données
-- Gestion d'erreurs cohérente
+## Exemples de réponses
 
-## Déploiement
+### Liste des citations
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "quote": "La vie est ce qui vous arrive quand vous êtes occupé à faire d'autres projets.",
+            "author": "John Lennon",
+            "category": "vie",
+            "created_at": "2025-10-06T16:51:34.000000Z",
+            "updated_at": "2025-10-06T16:51:34.000000Z"
+        }
+    ],
+    "current_page": 1,
+    "last_page": 5,
+    "per_page": 10,
+    "total": 50
+}
+```
 
-### Environnement de développement
-Le serveur de développement Laravel (`php artisan serve`) est utilisé pour les tests locaux.
+### Citation aléatoire
+```json
+{
+    "data": {
+        "id": 15,
+        "quote": "Le bonheur n'est pas quelque chose de tout fait. Il vient de vos propres actions.",
+        "author": "Dalaï Lama",
+        "category": "bonheur"
+    }
+}
+```
 
-### Production (future)
-- Configuration pour déploiement sur serveurs web
-- Optimisations de performance
-- Gestion des logs et monitoring
+## Sécurité et bonnes pratiques
 
-## Documentation
+- Validation stricte des données d'entrée
+- Protection contre l'injection SQL via Eloquent ORM
+- Gestion d'erreurs avec messages appropriés
+- Respect des conventions REST
+- Code documenté et structuré
 
-Chaque module possède sa propre documentation détaillée accessible dans sa branche respective :
-- README.md spécifique au module
-- Collections Postman
-- Scripts de test
+## Performance
 
-## Roadmap
+- Pagination automatique pour éviter la surcharge
+- Index sur les colonnes de recherche
+- Requêtes optimisées avec Eloquent
+- Cache possible pour les citations populaires (amélioration future)
 
-### Phase 1 - Développement des modules (En cours)
-- [x] Module Citations (Ndiawo)
-- [ ] Module Produits (Thiané)
-- [ ] Module Articles (Alpha)
+## Intégration
 
-### Phase 2 - Intégration
-- [ ] Fusion de tous les modules sur main
-- [ ] Tests d'intégration
-- [ ] Documentation globale
+Ce module est conçu pour s'intégrer facilement avec :
+- Module Articles (catégories communes)
+- Frontend React (remplacement de DummyJSON)
 
-### Phase 3 - Connexion frontend
-- [ ] Remplacement de DummyJSON par l'API Laravel
-- [ ] Tests frontend/backend
-- [ ] Optimisations performance
+## Développement
 
-## Support et contribution
+### Standards respectés
+- Conventions de nommage Laravel
+- Structure MVC respectée
+- Validation via Form Requests
+- Tests inclus
 
-### Issues et bugs
-Utiliser le système d'Issues GitHub pour reporter les problèmes ou demander de l'aide.
+### Fichiers principaux
+- `app/Http/Controllers/QuoteController.php`
+- `app/Models/Quote.php` 
+- `app/Models/Category.php`
+- `app/Http/Requests/StoreQuoteRequest.php`
+- `app/Http/Requests/UpdateQuoteRequest.php`
+- `database/migrations/create_quotes_table.php`
+- `database/seeders/QuoteSeeder.php`
+- `database/factories/QuoteFactory.php`
 
-### Standards de contribution
-1. Travailler sur une branche dédiée
-2. Respecter les conventions de nommage
-3. Inclure des tests
-4. Documenter les changements
-5. Créer une Pull Request pour review
+## Auteur
+
+**Ndiawo** - Développeur responsable du module Citations  
+Projet réalisé dans le cadre du cours Laravel collaboratif
 
 ## Licence
 
-Projet éducatif dans le cadre d'un cours Laravel.
-
----
-
-**Note importante** : Ce projet suit une approche de développement collaboratif par branches. Chaque développeur travaille sur son module de manière indépendante avant l'intégration finale, permettant un apprentissage optimal des concepts Laravel et des bonnes pratiques de développement en équipe.
+Projet éducatif - Laravel API Blog
