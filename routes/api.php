@@ -2,29 +2,38 @@
 
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\ProductController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use Illuminate\Support\Facades\Route;
 
-// Routes liées aux articles
+// ==========================================
+// ROUTES CITATIONS (Ndiawo)
+// ==========================================
+Route::get('/quotes/search', [QuoteController::class, 'search']);
+Route::get('/quotes/random', [QuoteController::class, 'random']);
+Route::get('/categories/quotes', [QuoteController::class, 'categories']);
+Route::get('/quotes', [QuoteController::class, 'index']);
+Route::get('/quotes/{id}', [QuoteController::class, 'show']);
+Route::post('/quotes', [QuoteController::class, 'store']);
+Route::put('/quotes/{id}', [QuoteController::class, 'update']);
+Route::delete('/quotes/{id}', [QuoteController::class, 'destroy']);
+
+// ==========================================
+// ROUTES POSTS (Alpha)
+// ==========================================
 Route::get('posts/search', [PostController::class, 'search']);
 Route::get('posts/stats', [PostController::class, 'stats']);
-
 Route::get('posts', [PostController::class, 'index']);
 Route::get('posts/{post}', [PostController::class, 'show'])->whereNumber('post');
 Route::post('posts', [PostController::class, 'store']);
 Route::put('posts/{post}', [PostController::class, 'update'])->whereNumber('post');
 Route::delete('posts/{post}', [PostController::class, 'destroy'])->whereNumber('post');
 
-
-
-
-// routes/api.php les routes API pour les produits
-use Illuminate\Http\Request;
-
+// ==========================================
+// ROUTES PRODUCTS (Thiané)
+// ==========================================
 Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/search/{keyword}', [ProductController::class, 'search']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::post('/products', [ProductController::class, 'store']);
 Route::put('/products/{id}', [ProductController::class, 'update']);
 Route::delete('/products/{id}', [ProductController::class, 'destroy']);
-Route::get('/products/search/{keyword}', [ProductController::class, 'search']);
-
