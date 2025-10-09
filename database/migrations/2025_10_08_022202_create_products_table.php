@@ -11,19 +11,19 @@ return new class extends Migration
      */
 public function up(): void
 {
-    Schema::create('products', function (Blueprint $table) {
-        $table->id();
-        $table->string('title');
-        $table->text('description')->nullable();
-        $table->decimal('price', 8, 2);
-        $table->float('discount_percentage')->nullable();
-        $table->float('rating')->default(0);
-        $table->integer('stock')->default(0);
-        $table->string('brand')->nullable();
-        $table->string('category')->nullable();
-        $table->string('thumbnail')->nullable();
-        $table->json('images')->nullable();
-        $table->timestamps();
+   Schema::create('products', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->text('description');
+            $table->decimal('price', 8, 2);
+            $table->decimal('discount_percentage', 5, 2);
+            $table->decimal('rating', 3, 1);
+            $table->integer('stock');
+            $table->string('brand');
+            $table->string('category');
+            $table->string('thumbnail');
+            $table->json('images'); // pour stocker plusieurs images sous forme de JSON
+            $table->timestamps();
     });
 }
 
