@@ -20,7 +20,6 @@ Route::delete('posts/{post}', [PostController::class, 'destroy'])->whereNumber('
 
 
 // routes/api.php les routes API pour les produits
-use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
