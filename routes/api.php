@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 
