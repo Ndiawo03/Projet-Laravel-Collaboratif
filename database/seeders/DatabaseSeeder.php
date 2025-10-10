@@ -13,11 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
-
-        //relier le seeder des produits
-        $this->call(ProductSeeder::class);
-        
         // User::factory(10)->create();
 
         User::factory()->create([
@@ -25,10 +20,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        // Seed categories and quotes
+        // Seed categories, quotes, posts and products
         $this->call([
             CategorySeeder::class,
             QuoteSeeder::class,
+            PostSeeder::class,
             ProductSeeder::class,
         ]);
     }

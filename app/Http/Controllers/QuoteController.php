@@ -114,23 +114,21 @@ class QuoteController extends Controller
     /**
      * Search quotes by content or author
      */
-    public function search(Request $request)
+    public function search($keyword)
     {
-        $searchTerm = $request->get('q');
-        
-        if (empty($searchTerm) || strlen($searchTerm) < 2) {
+        if (empty($keyword) || strlen($keyword) < 2) {
             return response()->json([
                 'message' => 'Le terme de recherche doit contenir au moins 2 caractères'
             ], 400);
         }
         
-        $quotes = Quote::where('quote', 'LIKE', '%' . $searchTerm . '%')
-                      ->orWhere('author', 'LIKE', '%' . $searchTerm . '%')
+        $quotes = Quote::where('quote', 'LIKE', '%' . $keyword . '%')
+                      ->orWhere('author', 'LIKE', '%' . $keyword . '%')
                       ->get();
         
         return response()->json([
             'data' => $quotes,
-            'search_term' => $searchTerm,
+            'search_term' => $keyword,
             'count' => $quotes->count()
         ]);
     }

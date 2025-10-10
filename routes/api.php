@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 // ==========================================
 // ROUTES CITATIONS (Ndiawo)
 // ==========================================
-Route::get('/quotes/search', [QuoteController::class, 'search']);
+Route::get('/quotes/search/{keyword}', [QuoteController::class, 'search']);
 Route::get('/quotes/random', [QuoteController::class, 'random']);
 Route::get('/categories/quotes', [QuoteController::class, 'categories']);
 Route::get('/quotes', [QuoteController::class, 'index']);
@@ -20,13 +20,13 @@ Route::delete('/quotes/{id}', [QuoteController::class, 'destroy']);
 // ==========================================
 // ROUTES POSTS (Alpha)
 // ==========================================
-Route::get('posts/search', [PostController::class, 'search']);
+Route::get('posts/search/{keyword}', [PostController::class, 'search']);
 Route::get('posts/stats', [PostController::class, 'stats']);
 Route::get('posts', [PostController::class, 'index']);
-Route::get('posts/{post}', [PostController::class, 'show'])->whereNumber('post');
+Route::get('posts/{id}', [PostController::class, 'show'])->whereNumber('id');
 Route::post('posts', [PostController::class, 'store']);
-Route::put('posts/{post}', [PostController::class, 'update'])->whereNumber('post');
-Route::delete('posts/{post}', [PostController::class, 'destroy'])->whereNumber('post');
+Route::put('posts/{id}', [PostController::class, 'update'])->whereNumber('id');
+Route::delete('posts/{id}', [PostController::class, 'destroy'])->whereNumber('id');
 
 // ==========================================
 // ROUTES PRODUCTS (Thiané)
