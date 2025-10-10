@@ -302,3 +302,34 @@ Projet réalisé dans le cadre du cours Laravel collaboratif
 ## Licence
 
 Projet éducatif - Laravel API Blog
+
+## First-time setup (pour les contributeurs)
+
+Après un `git pull`, exécutez l'une des options suivantes pour initialiser l'application localement (Windows PowerShell) :
+
+Option manuelle :
+
+```powershell
+composer install
+if (-Not (Test-Path .env)) { Copy-Item .env.example .env }
+php artisan key:generate
+if (-Not (Test-Path database\database.sqlite)) { New-Item -ItemType File database\database.sqlite }
+php artisan migrate --force --seed
+php artisan route:clear
+php artisan serve
+```
+
+Option automatique :
+
+```powershell
+composer run setup
+```
+
+Le script `composer run setup` exécute `scripts/dev-setup.ps1` (Windows) ou `scripts/dev-setup.sh` (POSIX) et s'occupe de copier `.env`, créer le fichier sqlite, générer la clé d'application et lancer les migrations + seeders.
+
+Si `/api/posts` retourne un tableau vide, exécutez :
+
+```powershell
+php artisan db:seed --class=RealisticPostSeeder --force
+```
+

@@ -27,7 +27,7 @@ class CategorySeeder extends Seeder
         ];
 
         foreach ($quoteCategories as $category) {
-            Category::create($category);
+            Category::firstOrCreate(['slug' => $category['slug']], $category);
         }
     }
 }
