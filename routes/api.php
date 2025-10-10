@@ -23,10 +23,10 @@ Route::delete('/quotes/{id}', [QuoteController::class, 'destroy']);
 Route::get('posts/search', [PostController::class, 'search']);
 Route::get('posts/stats', [PostController::class, 'stats']);
 Route::get('posts', [PostController::class, 'index']);
-Route::get('posts/{post}', [PostController::class, 'show'])->whereNumber('post');
+Route::get('posts/{id}', [PostController::class, 'show'])->whereNumber('id');
 Route::post('posts', [PostController::class, 'store']);
-Route::put('posts/{post}', [PostController::class, 'update'])->whereNumber('post');
-Route::delete('posts/{post}', [PostController::class, 'destroy'])->whereNumber('post');
+Route::put('posts/{id}', [PostController::class, 'update'])->whereNumber('id');
+Route::delete('posts/{id}', [PostController::class, 'destroy'])->whereNumber('id');
 
 // ==========================================
 // ROUTES PRODUCTS (Thiané)

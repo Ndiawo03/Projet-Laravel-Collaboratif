@@ -31,8 +31,9 @@ class PostController extends Controller
         return response()->json($query->latest()->paginate($perPage));
     }
 
-    public function show(Post $post)
+    public function show($id)
     {
+        $post = Post::findOrFail($id);
         return response()->json($post);
     }
 
@@ -42,14 +43,16 @@ class PostController extends Controller
         return response()->json($post, 201);
     }
 
-    public function update(UpdatePostRequest $request, Post $post)
+    public function update(UpdatePostRequest $request, $id)
     {
+        $post = Post::findOrFail($id);
         $post->update($request->validated());
         return response()->json($post);
     }
 
-    public function destroy(Post $post)
+    public function destroy($id)
     {
+        $post = Post::findOrFail($id);
         $post->delete();
         return response()->noContent();
     }
