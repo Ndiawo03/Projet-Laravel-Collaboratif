@@ -47,6 +47,15 @@
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi"
         ],
+        "setup:windows": [
+            "powershell -ExecutionPolicy Bypass -File scripts\\dev-setup.ps1"
+        ],
+        "setup:posix": [
+            "sh ./scripts/dev-setup.sh"
+        ],
+        "setup": [
+            "composer run setup:windows || composer run setup:posix"
+        ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
         ],
